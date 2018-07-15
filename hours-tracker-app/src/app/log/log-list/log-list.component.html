@@ -1,0 +1,13 @@
+<table>
+  <thead></thead>
+  <tbody>
+    <tr *ngFor="let log of timeLogs">
+      <td>{{log.start | date:'mediumDate'}}
+        <span>{{log.start | date:'mediumTime'}}</span>
+      </td>
+      <td>{{log.end | date}}
+        <span>{{log.end | date:'mediumTime'}}</span>
+      </td>
+    </tr>
+  </tbody>
+</table>

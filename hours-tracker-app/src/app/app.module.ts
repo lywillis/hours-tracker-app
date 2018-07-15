@@ -3,17 +3,19 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { MongoService } from 'src/app/services/mongo.service';
+import { TimeLogService } from 'src/app/services/timelog.service';
+import { LogListComponent } from './log/log-list/log-list.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LogListComponent
   ],
   imports: [
     BrowserModule,
     HttpModule
   ],
-  providers: [MongoService],
+  providers: [TimeLogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
