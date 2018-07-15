@@ -5,9 +5,10 @@ import logger from 'morgan';
 import mongoose from 'mongoose';
 import SourceMapSupport from 'source-map-support';
 
+// import routes 
+import timeLogRoutes from './routes/timelog.server.routes';
 // define our app using express
 const app = express();
-
 
 // allow-cors
 app.use(function(req,res,next){
@@ -34,6 +35,11 @@ mongoose.connect(mongodb, {
 // add Source Map Support
 SourceMapSupport.install();
 
+app.use('/api', timeLogRoutes);
+
+app.get('/', (req,res) => {
+    return res.end('Api working');
+  })
 // catch 404
 app.use((req, res, next) => {
     res.status(404).send('<h2 align=center>Page Not Found!</h2>');
