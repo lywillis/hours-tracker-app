@@ -6,6 +6,18 @@ import { Http } from '@angular/http';
 })
 export class MongoService {
 
-  constructor(http: Http) {
+  apiUrl = 'http://localhost:3001/api/';
+  constructor(private http: Http) {
    }
+
+   createTimeLog(timeLog: any): Promise<any> {
+    return this.http.post(this.apiUrl, timeLog)
+    .toPromise()
+    .then(this.handleData)
+    .catch(this.handleError);
+   }
+
+   handleData() {}
+
+   handleError() {}
 }
