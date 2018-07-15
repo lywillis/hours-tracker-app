@@ -10,3 +10,13 @@ export const getTimeLogs = (req,res) => {
   return res.json({'success':true,'message':'Time logs fetched successfully',logs});
     });
   }
+
+  export const addTimeLog = (req,res) => {
+    const newLog= new TimeLog(req.body);
+    newLog.save((err,log) => {
+      if(err){
+      return res.json({'success':false,'message':'Could not add time log'});
+      }
+  return res.json({'success':true,'message':'Time log added successfully',log});
+    })
+  }
