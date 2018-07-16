@@ -1,14 +1,18 @@
 <table>
-  <thead></thead>
+  <thead>
+    <th id="start">Date</th>
+    <th id="end"></th>
+    <th id="duration">Duration</th>
+  </thead>
   <tbody>
     <tr *ngFor="let log of timeLogs">
-      <td>{{log.start | date:'mediumDate'}}
-        <span>{{log.start | date:'mediumTime'}}</span>
+      <td headers="start">{{log.start | date:'mediumDate'}}
+        <div>{{log.start | date:'mediumTime'}}</div>
       </td>
-      <td>{{log.end | date}}
-        <span>{{log.end | date:'mediumTime'}}</span>
+      <td headers="end">
+        <div>{{log.end | date:'mediumTime'}}</div>
       </td>
-      <td>{{log.duration.toString()}}</td>
+      <td headers="duration">{{log.duration.toString()}}</td>
     </tr>
   </tbody>
 </table>
