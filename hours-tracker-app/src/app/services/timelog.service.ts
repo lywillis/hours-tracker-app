@@ -18,6 +18,12 @@ export class TimeLogService {
       .catch(this.handleError);
   }
 
+  deleteTimeLog(timeLog: TimeLog): Promise<TimeLog> {
+    return this.http.delete(this.apiUrl + timeLog._id).toPromise()
+    .then(this.handleData)
+    .catch(this.handleError);
+  }
+
   getTimeLogs(): Promise<TimeLog[]> {
     return this.http.get(this.apiUrl)
       .toPromise()

@@ -14,11 +14,20 @@ export const getTimeLogs = (req,res) => {
   }
 
   export const addTimeLog = (req,res) => {
-    const newLog= new TimeLog(req.body);
+    const newLog = new TimeLog(req.body);
     newLog.save((err,log) => {
       if(err){
       return res.json({'success':false,'message':'Could not add time log'});
       }
   return res.json({'success':true,'message':'Time log added successfully',log});
+    })
+  }
+
+export const deleteTimeLog = (req, res) => {
+    TimeLog.findByIdAndRemove(req.params.id, (err, log) => {
+        if (err) {
+            return res.json({ 'success': false, 'message': 'Could not delete time log' });
+        }
+        return res.json({ 'success': true, 'message': 'Time log deleted successfully', log });
     })
   }

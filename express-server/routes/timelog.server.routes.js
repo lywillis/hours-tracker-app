@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.route('/')
     .get(timeLogController.getTimeLogs)
-    .post(timeLogController.addTimeLog);
+    .post(timeLogController.addTimeLog)
+    .delete(timeLogController.deleteTimeLog);
 
 export default router; 
