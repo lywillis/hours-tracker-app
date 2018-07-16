@@ -12,14 +12,18 @@ export class LogListComponent implements OnInit {
   timeLogs: Array<TimeLog>;
   constructor(private timeLogService: TimeLogService) { }
   ngOnInit() {
-    this.timeLogService.getTimeLogs().then(logs => {
-      this.timeLogs = logs;
-    });
+    this.getTimeLogs();
   }
   deleteTimeLog(timeLog: TimeLog) {
     this.timeLogService.deleteTimeLog(timeLog).then(res => {
-      this.timeLogs.splice(this.timeLogs.indexOf(timeLog));
+      this.getTimeLogs();
     });
   }
+
+  getTimeLogs() {
+    this.timeLogService.getTimeLogs().then(logs => {
+      this.timeLogs = logs;
+  });
+}
 
 }

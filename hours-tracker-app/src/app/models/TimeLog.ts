@@ -6,8 +6,7 @@ export class TimeLog {
     end: Date;
     duration: Duration;
 
-    constructor(id: string, start: Date, end: Date) {
-        this._id = id;
+    constructor(start: Date, end: Date) {
         this.start = start;
         this.end = end;
         this.duration = new Duration(start, end);

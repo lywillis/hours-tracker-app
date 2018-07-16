@@ -32,10 +32,11 @@ export class TimeLogService {
         return body.logs.map(log => {
           const start = new Date(log.start);
           const end = new Date(log.end);
-          return new TimeLog(
-            log._id,
+          const timeLog = new TimeLog(
             start,
             end);
+            timeLog._id = log._id;
+            return timeLog;
         });
 
       })
