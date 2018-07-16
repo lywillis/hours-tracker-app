@@ -27,6 +27,7 @@ export class TimeLogService {
           const start = new Date(log.start);
           const end = new Date(log.end);
           return new TimeLog(
+            log._id,
             start,
             end);
         });
