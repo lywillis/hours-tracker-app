@@ -9,7 +9,7 @@ export class TimeLogService {
 
   apiUrl = 'http://localhost:3001/api/';
   constructor(private http: Http) {
-   }
+  }
 
   createTimeLog(timeLog: TimeLog): Promise<TimeLog> {
     return this.http.post(this.apiUrl, timeLog)
@@ -23,19 +23,26 @@ export class TimeLogService {
       .toPromise()
       .then(res => {
         const body = this.handleData(res);
-        return body.logs;
+        return body.logs.map(log => {
+          const start = new Date(log.start);
+          const end = new Date(log.end);
+          return new TimeLog(
+            start,
+            end);
+        });
+
       })
       .catch(this.handleError);
   }
 
-   private handleData(res: any) {
+  private handleData(res: any) {
     const body = res.json();
     console.log(body); // for development purposes only
     return body || {};
-}
+  }
 
-private handleError(error: any): Promise<any> {
-  console.error('An error occurred', error); // for development purposes only
-  return Promise.reject(error.message || error);
-}
+  private handleError(error: any): Promise<any> {
+    console.error('An error occurred', error); // for development purposes only
+    return Promise.reject(error.message || error);
+  }
 }
