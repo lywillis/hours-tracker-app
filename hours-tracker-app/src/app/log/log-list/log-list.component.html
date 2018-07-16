@@ -13,6 +13,7 @@
         <div>{{log.end | date:'mediumTime'}}</div>
       </td>
       <td headers="duration">{{log.duration.toString()}}</td>
+      <td><button (click)="deleteTimeLog(log)">X</button></td>
     </tr>
   </tbody>
 </table>

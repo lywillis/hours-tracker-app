@@ -16,5 +16,10 @@ export class LogListComponent implements OnInit {
       this.timeLogs = logs;
     });
   }
+  deleteTimeLog(timeLog: TimeLog) {
+    this.timeLogService.deleteTimeLog(timeLog).then(res => {
+      this.timeLogs.splice(this.timeLogs.indexOf(timeLog));
+    });
+  }
 
 }
