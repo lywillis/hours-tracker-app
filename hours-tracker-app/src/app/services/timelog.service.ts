@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { TimeLog } from 'src/app/models/TimeLog';
+import { Observable} from 'rxjs';
+import 'rxjs/add/operator/map';
 
 @Injectable({
   providedIn: 'root'
@@ -19,28 +21,21 @@ export class TimeLogService {
   }
 
   deleteTimeLog(timeLog: TimeLog): Promise<TimeLog> {
-    return this.http.delete(this.apiUrl + timeLog._id).toPromise()
+    return this.http.delete(this.apiUrl + timeLog.id).toPromise()
     .then(this.handleData)
     .catch(this.handleError);
   }
 
-  getTimeLogs(): Promise<TimeLog[]> {
-    return this.http.get(this.apiUrl)
-      .toPromise()
-      .then(res => {
+  getTimeLogs(): Observable<TimeLog[]> {
+    return this.http.get(this.apiUrl).map(res => {
         const body = this.handleData(res);
         return body.logs.map(log => {
           const start = new Date(log.start);
           const end = new Date(log.end);
-          const timeLog = new TimeLog(
-            start,
-            end);
-            timeLog._id = log._id;
+          const timeLog = new TimeLog(start, end, log._id);
             return timeLog;
         });
-
-      })
-      .catch(this.handleError);
+      });
   }
 
   private handleData(res: any) {
