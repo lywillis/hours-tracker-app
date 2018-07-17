@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { TimeLog } from 'src/app/models/TimeLog';
 import { Observable} from 'rxjs';
-import 'rxjs/add/operator/map';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class TimeLogService {
   }
 
   getTimeLogs(): Observable<TimeLog[]> {
-    return this.http.get(this.apiUrl).map(res => {
+    return this.http.get(this.apiUrl).pipe(map(res => {
         const body = this.handleData(res);
         return body.logs.map(log => {
           const start = new Date(log.start);
@@ -35,7 +35,7 @@ export class TimeLogService {
           const timeLog = new TimeLog(start, end, log._id);
             return timeLog;
         });
-      });
+      }), catchError(this.handleData));
   }
 
   private handleData(res: any) {
