@@ -30,4 +30,15 @@ export const deleteTimeLog = (req, res) => {
         }
         return res.json({ 'success': true, 'message': 'Time log deleted successfully', log });
     })
+
+    export const getTimeLog = (req,res) => {
+      TimeLog.findById(req.params.id)
+      .exec((err,log) => {
+        if(err){
+        return res.json({'success':false,'message':'Cannot find requested time log'});
+        }
+    return res.json({'success':true,'message':'Time log found',log});
+      });
+    }
+
   }

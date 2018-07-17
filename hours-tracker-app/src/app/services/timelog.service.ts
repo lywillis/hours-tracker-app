@@ -9,7 +9,7 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class TimeLogService {
 
-  apiUrl = 'http://localhost:3001/api/';
+  apiUrl = 'http://localhost:3001/api/log/';
   constructor(private http: Http) {
   }
 
@@ -22,6 +22,12 @@ export class TimeLogService {
 
   deleteTimeLog(timeLog: TimeLog): Promise<TimeLog> {
     return this.http.delete(this.apiUrl + timeLog.id).toPromise()
+    .then(this.handleData)
+    .catch(this.handleError);
+  }
+  getTimeLog(id: string): Promise<TimeLog> {
+    return this.http.get(this.apiUrl + id)
+    .toPromise()
     .then(this.handleData)
     .catch(this.handleError);
   }
