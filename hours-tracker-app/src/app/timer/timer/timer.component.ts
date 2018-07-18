@@ -20,7 +20,7 @@ export class TimerComponent implements OnInit {
       if (status === TimerStatus.Play) {
         this.startTimer();
       }
-      if (status === TimerStatus.Stop) {
+      if (status === TimerStatus.Stopped) {
         this.stopTimer();
       }
     });
@@ -35,5 +35,9 @@ export class TimerComponent implements OnInit {
   stopTimer() {
     this.ticks = 0;
     this.timerSub.unsubscribe();
+  }
+
+  toggleTimer() {
+    this.timerService.toggleStatus();
   }
 }

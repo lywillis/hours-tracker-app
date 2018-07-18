@@ -3,7 +3,7 @@ export class TimeLog {
     start: Date;
     end: Date;
     get duration(): number  {
-        return this.end.getTime() - this.start.getTime();
+        return Math.floor((this.end.getTime() - this.start.getTime()) / 1000);
     }
     // milliseconds
     constructor(start: Date, end: Date, id: string = null) {

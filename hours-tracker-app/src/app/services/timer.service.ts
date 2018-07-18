@@ -3,7 +3,7 @@ import { Observable } from 'rxjs/Observable';
 
 export enum TimerStatus {
   Play,
-  Stop
+  Stopped
 }
 
 @Injectable({
@@ -11,16 +11,26 @@ export enum TimerStatus {
 })
 
 export class TimerService {
+  currStatus: TimerStatus = TimerStatus.Stopped;
   timerStatus$: EventEmitter<TimerStatus> = new EventEmitter<TimerStatus>();
   constructor() { }
 
 start() {
-  this.timerStatus$.emit(TimerStatus.Play);
+  this.currStatus = TimerStatus.Play;
+  this.timerStatus$.emit(this.currStatus);
 }
 
 stop() {
-  this.timerStatus$.emit(TimerStatus.Stop);
+  this.currStatus = TimerStatus.Stopped;
+  this.timerStatus$.emit(this.currStatus);
 }
 
+toggleStatus() {
+  if (this.currStatus === TimerStatus.Stopped) {
+    this.start();
+  } else {
+    this.stop();
+  }
+}
 
 }
