@@ -14,7 +14,7 @@ export class TimeLogService {
   }
 
   createTimeLog(timeLog: TimeLog): Promise<TimeLog> {
-    return this.http.post(this.apiUrl, timeLog)
+    return this.http.post(this.apiUrl + 'add/', timeLog)
       .toPromise()
       .then(this.handleData)
       .catch(this.handleError);
@@ -32,8 +32,9 @@ export class TimeLogService {
     .catch(this.handleError);
   }
 
-  getTimeLogs(): Observable<TimeLog[]> {
-    return this.http.get(this.apiUrl).pipe(map(res => {
+  getTimeLogs(n = 100): Observable<TimeLog[]> {
+    const req = {n: n};
+    return this.http.post(this.apiUrl + 'find/', req).pipe(map(res => {
         const body = this.handleData(res);
         return body.logs.map(log => {
           const start = new Date(log.start);

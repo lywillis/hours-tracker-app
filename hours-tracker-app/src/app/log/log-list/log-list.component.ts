@@ -31,8 +31,7 @@ export class LogListComponent implements OnInit, OnDestroy {
   getTimeLogs() {
     this.timeLogSub = this.timeLogService.getTimeLogs().subscribe(logs => {
       this.timeLogs = logs;
-      console.log(logs);
-  }, err => console.log(err));
+  });
 }
 
 }

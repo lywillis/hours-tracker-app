@@ -3,8 +3,10 @@ import mongoose from 'mongoose';
 import TimeLog from '../models/timelog.server.model';
 
 export const getTimeLogs = (req,res) => {
+    var numOfLogs = req.body.n;
     TimeLog.find()
     .sort({start: -1})
+    .limit(numOfLogs)
     .exec((err,logs) => {
       if(err){
       return res.json({'success':false,'message':'Cannot fetch time logs'});
