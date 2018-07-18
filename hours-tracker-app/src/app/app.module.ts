@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { TimeLogService } from 'src/app/services/timelog.service';
 import { LogListComponent } from './log/log-list/log-list.component';
 import { TimerComponent } from './timer/timer/timer.component';
+import { DurationPipe } from './pipes/duration.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     LogListComponent,
-    TimerComponent
+    TimerComponent,
+    DurationPipe
   ],
   imports: [
     BrowserModule,

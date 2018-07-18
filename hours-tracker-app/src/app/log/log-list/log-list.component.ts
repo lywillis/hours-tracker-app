@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TimeLogService } from 'src/app/services/timelog.service';
 import { TimeLog } from 'src/app/models/TimeLog';
 import { DatePipe } from '@angular/common';
+import { DurationPipe} from 'src/app/pipes/duration.pipe';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 

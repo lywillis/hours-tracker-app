@@ -30,6 +30,7 @@ export const deleteTimeLog = (req, res) => {
         }
         return res.json({ 'success': true, 'message': 'Time log deleted successfully', log });
     })
+  }
 
     export const getTimeLog = (req,res) => {
       TimeLog.findById(req.params.id)
@@ -41,4 +42,4 @@ export const deleteTimeLog = (req, res) => {
       });
     }
 
-  }
+  
