@@ -12,7 +12,7 @@ export class TimerComponent implements OnInit {
   timerStatusSub: Subscription;
   timerSub: Subscription;
   // time display
-  ticks: number;
+  ticks = 0; // in seconds
   constructor(private timerService: TimerService) { }
 
   ngOnInit() {
