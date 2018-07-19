@@ -6,7 +6,7 @@ import { LogListComponent } from 'src/app/log/log-list/log-list.component';
 import { DashboardComponent } from 'src/app/dashboard/dashboard.component';
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: '', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent },
   { path: 'timer', component: TimerComponent },
   { path: 'logs', component: LogListComponent}
 ];
