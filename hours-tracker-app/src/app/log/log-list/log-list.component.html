@@ -1,19 +1,25 @@
-<table>
+<table class = "table table-bordered">
   <thead>
-    <th id="start">Date</th>
-    <th id="end"></th>
-    <th id="duration">Duration</th>
+    <th id="start" scope="col">Date</th>
+    <th id="end" scope="col"></th>
+    <th id="duration" scope="col">Duration</th>
+    <th id="delete" scope = "col"></th>
   </thead>
   <tbody>
     <tr *ngFor="let log of timeLogs">
-      <td headers="start">{{log.start | date:'mediumDate'}}
+      <td headers="start">
+        <div>{{log.start | date:'mediumDate'}}</div>
         <div>{{log.start | date:'mediumTime'}}</div>
       </td>
       <td headers="end">
         <div>{{log.end | date:'mediumTime'}}</div>
       </td>
-      <td headers="duration">{{log.duration | duration }}</td>
-      <td><button (click)="deleteTimeLog(log)">X</button></td>
+      <td headers="duration">
+        <div>{{log.duration | duration }}</div>
+      </td>
+      <td headers="delete">
+        <button (click)="deleteTimeLog(log)">X</button>
+      </td>
     </tr>
   </tbody>
 </table>

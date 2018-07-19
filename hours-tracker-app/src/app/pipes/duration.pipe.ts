@@ -12,7 +12,7 @@ export class DurationPipe implements PipeTransform {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
     const seconds = totalSeconds % 60;
-    return this.pad(hours) + ':' + this.pad(minutes) + ':' + this.pad(seconds);
+    return this.pad(hours) + ' : ' + this.pad(minutes) + ' : ' + this.pad(seconds);
   }
 
   private pad(digit: any): string {
