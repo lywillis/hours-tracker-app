@@ -1,18 +1,33 @@
 <div class="wrapper">
-    <nav id="sidebar" class="navbar-left">
+    <nav id="sidebar"
+         class="navbar-left">
         <ul class="nav nav-stacked">
             <li [routerLinkActive]="['active']">
-                <a class="nav-link" [routerLink]="['/dashboard']">Dashboard</a>
+                <a class="nav-link"
+                   [routerLink]="['/dashboard']">
+                   <span class="glyphicon glyphicon-th-large"
+                   aria-hidden="true">
+             </span></a>
             </li>
             <li [routerLinkActive]="['active']">
-                <a class="nav-link" [routerLink]="['/timer']">Timer</a>
+                <a class="nav-link"
+                   [routerLink]="['/timer']">
+                    <span class="glyphicon glyphicon-time"
+                          aria-hidden="true">
+                    </span>
+                </a>
             </li>
             <li [routerLinkActive]="['active']">
-                <a class="nav-link" [routerLink]="['/logs']">Logs</a>
+                <a class="nav-link"
+                   [routerLink]="['/logs']">
+                    <span class="glyphicon glyphicon-list"
+                          aria-hidden="true">
+                    </span>
+                </a>
             </li>
         </ul>
     </nav>
     <div id="content">
-    <router-outlet></router-outlet>
-</div>
+        <router-outlet></router-outlet>
+    </div>
 </div>
