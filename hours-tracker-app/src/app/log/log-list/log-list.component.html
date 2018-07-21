@@ -1,16 +1,16 @@
 <table class="table table-hover table-bordered">
   <thead>
     <tr>
-    <th id="start" scope="col">Date</th>
+    <th id="start" scope="col"><h4>Date</h4></th>
     <th id="end" scope="col"></th>
-    <th id="duration" scope="col">Duration</th>
+    <th id="duration" scope="col"><h4>Duration</h4></th>
     <th id="delete" scope = "col"></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let log of timeLogs">
       <td headers="start" id="start">
-        <div><strong>{{log.start | date:'mediumDate'}}</strong></div>
+      <h5>{{log.start | date:'mediumDate'}}</h5>
         <div>{{log.start | date:'mediumTime'}}</div>
       </td>
       <td headers="end" id="end">

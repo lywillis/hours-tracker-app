@@ -7,6 +7,7 @@ import SourceMapSupport from 'source-map-support';
 
 // import routes 
 import timeLogRoutes from './routes/timelog.server.routes';
+import projectRoutes from './routes/project.server.routes';
 // define our app using express
 const app = express();
 
@@ -37,6 +38,7 @@ mongoose.connect(mongodb, {
 SourceMapSupport.install();
 
 app.use('/api', timeLogRoutes);
+app.use('/api', projectRoutes);
 
 app.get('/', (req,res) => {
     return res.end('Api working');
