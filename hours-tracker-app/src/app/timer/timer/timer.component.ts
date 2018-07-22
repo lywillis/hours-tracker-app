@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { TimerService, TimerStatus } from 'src/app/services/timer.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import {timer} from 'rxjs/observable/timer';
+
 @Component({
   selector: 'app-timer',
   templateUrl: './timer.component.html',
@@ -10,9 +11,11 @@ import {timer} from 'rxjs/observable/timer';
 })
 export class TimerComponent implements OnInit {
   timerStatusSub: Subscription;
+  play = false;
   timerSub: Subscription;
   // time display
   ticks = 0; // in seconds
+  @Output() elapsedTime: EventEmitter<number> = new EventEmitter();
   constructor(private timerService: TimerService) { }
 
   ngOnInit() {
@@ -28,13 +31,20 @@ export class TimerComponent implements OnInit {
   }
 
   startTimer() {
+    this.play = true;
     this.timerSub = timer(1, 1000).subscribe(ticks => {
       this.ticks = ticks;
     });
   }
   stopTimer() {
-    this.ticks = 0;
+    this.play = false;
     this.timerSub.unsubscribe();
+  }
+
+  saveTime() {
+    console.log(this.ticks);
+    this.elapsedTime.emit(this.ticks);
+    this.ticks = 0;
   }
 
   toggleTimer() {
