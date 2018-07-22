@@ -2,8 +2,9 @@ export class Project {
     id: string;
     name: string;
     totalSeconds: number;
-    constructor(name: string, id: string = null) {
+    createdAt: Date;
+    constructor(name: string) {
         this.name = name;
-        this.id = id;
+        this.totalSeconds = 0;
     }
 }

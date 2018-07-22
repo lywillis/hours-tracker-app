@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+              "src/less/bootstrap/less/bootstrap.less",
               "src/less/styles.less"
             ],
             "scripts": [

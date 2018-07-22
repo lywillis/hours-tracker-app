@@ -5,6 +5,10 @@ var Schema = mongoose.Schema({
   createdAt:{
     type: Date,
     default: Date.now
+  }, 
+  totalSeconds: {
+      type: Number, 
+      default: 0
   }
 
 });

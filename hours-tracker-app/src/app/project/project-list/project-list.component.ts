@@ -3,6 +3,7 @@ import { ProjectService } from 'src/app/services/project.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Project } from 'src/app/models/Project';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-project-list',
@@ -15,6 +16,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService) { }
 
   ngOnInit() {
+    // this.projectService.createProject(new Project('new'));
     this.getProjects();
   }
   ngOnDestroy() {

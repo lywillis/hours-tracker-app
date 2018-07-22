@@ -15,7 +15,13 @@ export class ProjectService {
     return this.http.post(this.apiUrl + 'find/', req).pipe(map(res => {
         const body = this.handleData(res);
         return body.projects.map(project => {
-          return new Project(project.name, project._id);
+          const p: Project =  {
+          name: project.name,
+          id: project._id,
+          createdAt: project.createdAt,
+          totalSeconds: project.totalSeconds
+          };
+          return p;
         });
       }), catchError(this.handleError));
   }
