@@ -42,7 +42,7 @@ export class TimeLogService {
           const timeLog = new TimeLog(start, end, log._id);
             return timeLog;
         });
-      }), catchError(this.handleData));
+      }), catchError(this.handleError));
   }
 
   private handleData(res: any) {

@@ -15,15 +15,16 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService) { }
 
   ngOnInit() {
-    this.projectService.getProjects();
+    this.getProjects();
   }
   ngOnDestroy() {
     this.projectSub.unsubscribe();
   }
 
   getProjects() {
-    this.projectService.getProjects().subscribe(projs => {
-      this.projects = projs;
+    this.projectSub = this.projectService.getProjects().subscribe(projects => {
+      this.projects = projects;
+      console.log(projects);
     });
   }
 

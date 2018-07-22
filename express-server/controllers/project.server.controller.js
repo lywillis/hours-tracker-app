@@ -7,11 +7,11 @@ export const getProjects = (req,res) => {
     Project.find()
     .sort({name: -1})
     .limit(numOfProjects)
-    .exec((err,projs) => {
+    .exec((err,projects) => {
       if(err){
       return res.json({'success':false,'message':'Cannot fetch projects'});
       }
-  return res.json({'success':true,'message':'Projects fetched successfully',projs});
+  return res.json({'success':true,'message':'Projects fetched successfully',projects});
     });
   }
 

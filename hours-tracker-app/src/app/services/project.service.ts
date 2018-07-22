@@ -17,7 +17,7 @@ export class ProjectService {
         return body.projects.map(project => {
           return new Project(project.name, project._id);
         });
-      }), catchError(this.handleData));
+      }), catchError(this.handleError));
   }
   createProject(project: Project): Promise<Project> {
     return this.http.post(this.apiUrl + 'add/', project)

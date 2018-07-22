@@ -1,3 +1,5 @@
-<p>
-  project-list works!
-</p>
+<div class="container">
+  <div *ngFor="let project of projects">
+    <h5 class="border border-dark">{{project.name}}</h5>
+  </div>
+</div>

@@ -9,10 +9,9 @@ import { Project } from 'src/app/models/Project';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private projectService: ProjectService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.projectService.createProject(new Project('test'));
   }
 
 }
