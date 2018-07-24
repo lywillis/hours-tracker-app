@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import TimeLog from './timelog.server.model';
 
 var Schema = mongoose.Schema({
   name: String,
@@ -6,11 +7,7 @@ var Schema = mongoose.Schema({
     type: Date,
     default: Date.now
   }, 
-  totalSeconds: {
-      type: Number, 
-      default: 0
-  }
-
+  logs: [TimeLog]
 });
 
 export default mongoose.model('Project', Schema);

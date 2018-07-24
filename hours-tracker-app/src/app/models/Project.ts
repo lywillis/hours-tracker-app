@@ -1,10 +1,11 @@
+import { TimeLog } from 'src/app/models/TimeLog';
+
 export class Project {
-    id: string;
+    id?: string;
     name: string;
-    totalSeconds: number;
-    createdAt: Date;
+    logs?: Array<TimeLog> = [];
+    createdAt?: Date;
     constructor(name: string) {
         this.name = name;
-        this.totalSeconds = 0;
     }
 }
