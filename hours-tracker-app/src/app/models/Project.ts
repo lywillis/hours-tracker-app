@@ -8,4 +8,7 @@ export class Project {
     constructor(name: string) {
         this.name = name;
     }
+    addLog(log: TimeLog) {
+        this.logs.push(log);
+    }
 }

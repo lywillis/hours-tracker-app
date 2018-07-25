@@ -11,6 +11,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { TimerService } from 'src/app/services/timer.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProjectListComponent } from './project/project-list/project-list.component';
+import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ProjectListComponent } from './project/project-list/project-list.compon
     TimerComponent,
     DurationPipe,
     DashboardComponent,
-    ProjectListComponent
+    ProjectListComponent,
+    ProjectDetailComponent
   ],
   imports: [
     BrowserModule,
