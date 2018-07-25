@@ -7,7 +7,7 @@ var Schema = mongoose.Schema({
     type: Date,
     default: Date.now
   }, 
-  logs: [TimeLog]
+  logs: [TimeLog.schema]
 });
 
 export default mongoose.model('Project', Schema);

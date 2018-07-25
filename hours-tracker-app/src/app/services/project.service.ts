@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { Observable} from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Project } from 'src/app/models/Project';
+import { TimeLog } from 'src/app/models/TimeLog';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +20,7 @@ export class ProjectService {
           name: project.name,
           id: project._id,
           createdAt: project.createdAt,
-          totalSeconds: project.totalSeconds
+          logs: project.logs
           };
           return p;
         });
@@ -27,6 +28,13 @@ export class ProjectService {
   }
   createProject(project: Project): Promise<Project> {
     return this.http.post(this.apiUrl + 'add/', project)
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError);
+  }
+
+  addLog(project: Project, log: TimeLog): Promise<Project> {
+    return this.http.post(this.apiUrl + `${project.id}`, log)
       .toPromise()
       .then(this.handleData)
       .catch(this.handleError);

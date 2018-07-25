@@ -11,4 +11,8 @@ router.route('/project/add')
 router.route('/project/find')
     .post(projectController.getProjects);
 
+router.route('/project/:id')
+    .post(projectController.addTime);
+    
+
 export default router; 
