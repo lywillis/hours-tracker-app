@@ -12,7 +12,7 @@ router.route('/project/find')
     .post(projectController.getProjects);
 
 router.route('/project/:id')
-    .post(projectController.addTime);
+    .put(projectController.addTime);
     
 
 export default router; 

@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import { Project } from 'src/app/models/Project';
 import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
 import { DatePipe } from '@angular/common';
+import { TimeLog } from '../../models/TimeLog';
 
 @Component({
   selector: 'app-project-list',
@@ -26,7 +27,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   getProjects() {
     this.projectSub = this.projectService.getProjects().subscribe(projects => {
       this.projects = projects;
-      console.log(projects);
     });
   }
 

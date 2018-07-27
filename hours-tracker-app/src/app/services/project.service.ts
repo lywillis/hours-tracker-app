@@ -15,15 +15,7 @@ export class ProjectService {
     const req = {n: n};
     return this.http.post(this.apiUrl + 'find/', req).pipe(map(res => {
         const body = this.handleData(res);
-        return body.projects.map(project => {
-          const p: Project =  {
-          name: project.name,
-          id: project._id,
-          createdAt: project.createdAt,
-          logs: project.logs
-          };
-          return p;
-        });
+        return body.projects;
       }), catchError(this.handleError));
   }
   createProject(project: Project): Promise<Project> {
@@ -34,7 +26,7 @@ export class ProjectService {
   }
 
   addLog(project: Project, log: TimeLog): Promise<Project> {
-    return this.http.post(this.apiUrl + `${project.id}`, log)
+    return this.http.put(this.apiUrl + `${project._id}`, log)
       .toPromise()
       .then(this.handleData)
       .catch(this.handleError);

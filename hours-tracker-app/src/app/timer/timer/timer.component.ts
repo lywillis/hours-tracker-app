@@ -4,18 +4,26 @@ import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import {timer} from 'rxjs/observable/timer';
 
+export interface IDuration {
+  start: Date;
+  end: Date;
+}
+
 @Component({
   selector: 'app-timer',
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.less']
 })
+
 export class TimerComponent implements OnInit {
   timerStatusSub: Subscription;
   play = false;
   timerSub: Subscription;
+  start: Date;
+  end: Date;
   // time display
   ticks = 0; // in seconds
-  @Output() elapsedTime: EventEmitter<number> = new EventEmitter();
+  @Output() elapsedTime: EventEmitter<IDuration> = new EventEmitter();
   constructor(private timerService: TimerService) { }
 
   ngOnInit() {
@@ -42,8 +50,10 @@ export class TimerComponent implements OnInit {
   }
 
   saveTime() {
-    console.log(this.ticks);
-    this.elapsedTime.emit(this.ticks);
+    this.elapsedTime.emit({
+      start: this.start,
+      end: this.end
+    });
     this.ticks = 0;
   }
 
