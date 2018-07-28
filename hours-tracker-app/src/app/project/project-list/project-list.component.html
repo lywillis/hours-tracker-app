@@ -2,5 +2,6 @@
   <div *ngFor="let project of projects">
     <h5 class="text-capitalize">{{project.name}}</h5>
     <small>{{project.createdAt | date:'mediumDate'}}</small>
+    <app-project-detail [project]="project"></app-project-detail>
   </div>
 </div>

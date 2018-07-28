@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Project } from 'src/app/models/Project';
-import { IDuration } from '../../timer/timer/timer.component';
 
 @Component({
   selector: 'app-project-detail',
@@ -12,10 +11,5 @@ export class ProjectDetailComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  }
-
-  getTimes(timeInfo: IDuration) {
-    const start = timeInfo.start;
-    const end = timeInfo.end;
   }
 }

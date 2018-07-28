@@ -1,13 +1,11 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input} from '@angular/core';
 import { TimerService, TimerStatus } from 'src/app/services/timer.service';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import {timer} from 'rxjs/observable/timer';
-
-export interface IDuration {
-  start: Date;
-  end: Date;
-}
+import { Project } from 'src/app/models/Project';
+import { ProjectService } from 'src/app/services/project.service';
+import { TimeLog } from 'src/app/models/TimeLog';
 
 @Component({
   selector: 'app-timer',
@@ -23,8 +21,8 @@ export class TimerComponent implements OnInit {
   end: Date;
   // time display
   ticks = 0; // in seconds
-  @Output() elapsedTime: EventEmitter<IDuration> = new EventEmitter();
-  constructor(private timerService: TimerService) { }
+  @Input() project: Project;
+  constructor(private timerService: TimerService, private projectService: ProjectService) { }
 
   ngOnInit() {
     this.timerStatusSub = this.timerService.timerStatus$.subscribe((status: TimerStatus) => {
@@ -40,20 +38,22 @@ export class TimerComponent implements OnInit {
 
   startTimer() {
     this.play = true;
+    this.start = new Date();
     this.timerSub = timer(1, 1000).subscribe(ticks => {
       this.ticks = ticks;
     });
   }
   stopTimer() {
     this.play = false;
+    this.end = new Date();
     this.timerSub.unsubscribe();
   }
 
   saveTime() {
-    this.elapsedTime.emit({
-      start: this.start,
-      end: this.end
-    });
+    // add log to current project
+    const log = new TimeLog(this.start, this.end);
+    this.projectService.addLog(this.project, log);
+    // clear timer
     this.ticks = 0;
   }
 
