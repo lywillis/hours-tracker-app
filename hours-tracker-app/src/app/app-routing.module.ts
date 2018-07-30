@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { TimerComponent } from 'src/app/timer/timer/timer.component';
+import { TimerComponent } from 'src/app/shared/timer/timer.component';
 import { LogListComponent } from 'src/app/log/log-list/log-list.component';
 import { DashboardComponent } from 'src/app/dashboard/dashboard.component';
 import { ProjectListComponent } from 'src/app/project/project-list/project-list.component';
