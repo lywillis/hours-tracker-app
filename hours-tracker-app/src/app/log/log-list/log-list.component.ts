@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { TimeLogService } from 'src/app/services/timelog.service';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { ProjectService } from 'src/app/services/project.service';
 import { TimeLog } from 'src/app/models/TimeLog';
 import { DatePipe } from '@angular/common';
 import { DurationPipe} from 'src/app/pipes/duration.pipe';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
+import { Project } from 'src/app/models/Project';
 
 @Component({
   selector: 'app-log-list',
@@ -12,9 +12,10 @@ import { OnDestroy } from '@angular/core/src/metadata/lifecycle_hooks';
   styleUrls: ['./log-list.component.less']
 })
 export class LogListComponent implements OnInit, OnDestroy {
-  timeLogs: Array<TimeLog>;
+  @Input() project: Project;
   timeLogSub: Subscription;
-  constructor(private timeLogService: TimeLogService) { }
+  timeLogs: Array<TimeLog>;
+  constructor(private projectService: ProjectService) { }
   ngOnInit() {
     this.getTimeLogs();
   }
@@ -22,14 +23,8 @@ export class LogListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.timeLogSub.unsubscribe();
   }
-  deleteTimeLog(timeLog: TimeLog) {
-    this.timeLogService.deleteTimeLog(timeLog).then(res => {
-      this.getTimeLogs();
-    });
-  }
-
   getTimeLogs() {
-    this.timeLogSub = this.timeLogService.getTimeLogs().subscribe(logs => {
+    this.timeLogSub = this.projectService.getTimeLogs(this.project).subscribe(logs => {
       this.timeLogs = logs;
   });
 }

@@ -15,12 +15,6 @@ export class ProjectDetailComponent implements OnInit {
     this.getProject();
   }
 
-  showLogs() {
-    this.projectService.getTimeLogs(this.project).subscribe(logs => {
-      console.log(logs);
-    });
-  }
-
   getProject() {
     const id = this.route.snapshot.paramMap.get('id');
     this.projectService.getProject(id).then(project => {
