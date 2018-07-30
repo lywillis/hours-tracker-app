@@ -1,7 +1,8 @@
 <div class="container">
   <div *ngFor="let project of projects">
-    <h5 class="text-capitalize">{{project.name}}</h5>
+    <a [routerLink]="['/project', project._id]">
+      <h5 class="text-capitalize">{{project.name}}</h5>
+    </a>
     <small>{{project.createdAt | date:'mediumDate'}}</small>
-    <app-project-detail [project]="project"></app-project-detail>
   </div>
 </div>

@@ -31,6 +31,16 @@ export class ProjectService {
       .then(this.handleData)
       .catch(this.handleError);
   }
+  getProject(id: string): Promise<Project> {
+    return this.http.get(this.apiUrl + id)
+    .toPromise()
+    .then(res => {
+      const body = this.handleData(res);
+      return body.project;
+    }
+    )
+    .catch(this.handleError);
+  }
 
   getTimeLogs(project: Project): Observable<TimeLog[]> {
     return this.http.get(this.apiUrl + project._id).pipe(map(res => {

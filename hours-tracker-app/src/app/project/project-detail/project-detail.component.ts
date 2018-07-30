@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Project } from 'src/app/models/Project';
 import { ProjectService } from 'src/app/services/project.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-project-detail',
@@ -8,15 +9,22 @@ import { ProjectService } from 'src/app/services/project.service';
   styleUrls: ['./project-detail.component.less']
 })
 export class ProjectDetailComponent implements OnInit {
-  @Input() project: Project;
-  constructor(private projectService: ProjectService) { }
-
+  project: Project;
+  constructor(private projectService: ProjectService, private route: ActivatedRoute) { }
   ngOnInit() {
+    this.getProject();
   }
 
   showLogs() {
     this.projectService.getTimeLogs(this.project).subscribe(logs => {
       console.log(logs);
+    });
+  }
+
+  getProject() {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.projectService.getProject(id).then(project => {
+      this.project = project;
     });
   }
 }
