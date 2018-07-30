@@ -12,6 +12,7 @@ import { TimerService } from 'src/app/services/timer.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProjectListComponent } from './project/project-list/project-list.component';
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
+import { ProjectSelectComponent } from './shared/project-select/project-select.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ProjectDetailComponent } from './project/project-detail/project-detail.
     DurationPipe,
     DashboardComponent,
     ProjectListComponent,
-    ProjectDetailComponent
+    ProjectDetailComponent,
+    ProjectSelectComponent
   ],
   imports: [
     BrowserModule,

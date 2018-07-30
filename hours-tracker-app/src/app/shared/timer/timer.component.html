@@ -1,3 +1,6 @@
+<div *ngIf="!project">
+<app-project-select (project$)="setProject($event)"></app-project-select>
+</div>
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="btn-group btn-group-md">

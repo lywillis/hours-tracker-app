@@ -1,0 +1,11 @@
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="projectDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Project
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="projectDropdown">
+    <li *ngFor="let project of projects">
+      <button (click)="selectProject(project)">{{project.name}}</button>
+    </li>
+  </ul>
+</div>

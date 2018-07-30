@@ -21,7 +21,7 @@ export class TimerComponent implements OnInit {
   end: Date;
   // time display
   ticks = 0; // in seconds
-  @Input() project: Project | null;
+  @Input() project?: Project;
   constructor(private timerService: TimerService, private projectService: ProjectService) { }
 
   ngOnInit() {
@@ -59,5 +59,8 @@ export class TimerComponent implements OnInit {
 
   toggleTimer() {
     this.timerService.toggleStatus();
+  }
+  setProject(event: Project) {
+    this.project = event;
   }
 }
