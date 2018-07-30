@@ -38,4 +38,13 @@ export const addTime = (req, res) => {
     });
   });
 }
+export const getProject = (req,res) => {
+  Project.findById(req.params.id)
+  .exec((err,project) => {
+    if(err){
+    return res.json({'success':false,'message':'Cannot find requested project'});
+    }
+return res.json({'success':true,'message':'Project found',project});
+  });
+}
   

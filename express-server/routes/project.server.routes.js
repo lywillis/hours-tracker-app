@@ -12,6 +12,7 @@ router.route('/project/find')
     .post(projectController.getProjects);
 
 router.route('/project/:id')
+    .get(projectController.getProject)
     .put(projectController.addTime);
     
 

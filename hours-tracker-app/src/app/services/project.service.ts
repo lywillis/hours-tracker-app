@@ -26,12 +26,24 @@ export class ProjectService {
   }
 
   addLog(project: Project, log: TimeLog): Promise<Project> {
-    return this.http.put(this.apiUrl + `${project._id}`, log)
+    return this.http.put(this.apiUrl + project._id, log)
       .toPromise()
       .then(this.handleData)
       .catch(this.handleError);
   }
 
+  getTimeLogs(project: Project): Observable<TimeLog[]> {
+    return this.http.get(this.apiUrl + project._id).pipe(map(res => {
+        const body = this.handleData(res);
+        return body.project.logs.map(log => {
+          const start = new Date(log.start);
+          const end = new Date(log.end);
+          const timeLog: TimeLog = new TimeLog(start, end);
+          timeLog.id = log._id;
+            return timeLog;
+        });
+      }), catchError(this.handleError));
+  }
 
   private handleData(res: any) {
     const body = res.json();

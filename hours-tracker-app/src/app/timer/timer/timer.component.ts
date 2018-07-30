@@ -21,7 +21,7 @@ export class TimerComponent implements OnInit {
   end: Date;
   // time display
   ticks = 0; // in seconds
-  @Input() project: Project;
+  @Input() project: Project | null;
   constructor(private timerService: TimerService, private projectService: ProjectService) { }
 
   ngOnInit() {
