@@ -47,4 +47,17 @@ export const getProject = (req,res) => {
 return res.json({'success':true,'message':'Project found',project});
   });
 }
+
+export const deleteTimeLog = (req, res) => {
+  Project.findById(req.params.id)
+  .exec((err,project) => {
+    project.logs.id(req.params.log).remove();
+    project.save((err, proj) => {
+      if (err) {
+        return res.json({ 'success': false, 'message': 'Could not delete time from project' });
+      }
+      return res.json({ 'success': true, 'message': 'Time log deleted successfully', proj });
+    });
+  });
+}
   

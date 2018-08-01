@@ -14,6 +14,9 @@ router.route('/project/find')
 router.route('/project/:id')
     .get(projectController.getProject)
     .put(projectController.addTime);
-    
+
+router.route('/project/:id/edit/:log')
+    .delete(projectController.deleteTimeLog);
+
 
 export default router; 

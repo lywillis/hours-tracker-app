@@ -31,6 +31,13 @@ export class ProjectService {
       .then(this.handleData)
       .catch(this.handleError);
   }
+
+  deleteLog(project: Project, log: TimeLog ): Promise<Project>  {
+    return this.http.delete(this.apiUrl + project._id + '/edit/' + log.id)
+      .toPromise()
+      .then(this.handleData)
+      .catch(this.handleError);
+  }
   getProject(id: string): Promise<Project> {
     return this.http.get(this.apiUrl + id)
     .toPromise()
