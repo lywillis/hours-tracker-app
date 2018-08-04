@@ -10,7 +10,6 @@ const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'timer', component: TimerComponent },
-  { path: 'logs', component: LogListComponent},
   { path: 'projects', component: ProjectListComponent},
   { path: 'project/:id', component: ProjectDetailComponent}
 ];
