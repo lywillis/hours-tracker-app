@@ -4,11 +4,14 @@ import { Observable} from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Project } from 'src/app/models/Project';
 import { TimeLog } from 'src/app/models/TimeLog';
+import { Subject } from 'rxjs/internal/Subject';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
   apiUrl = 'http://localhost:3001/api/project/';
+  timeAdded: Subject<TimeLog> = new Subject<TimeLog>();
   constructor(private http: Http) { }
 
   getProjects(n = 100): Observable<Project[]> {
@@ -21,21 +24,30 @@ export class ProjectService {
   createProject(project: Project): Promise<Project> {
     return this.http.post(this.apiUrl + 'add/', project)
       .toPromise()
-      .then(this.handleData)
+      .then(res => {
+        const body = this.handleData(res);
+        return body;
+      })
       .catch(this.handleError);
   }
 
   addLog(project: Project, log: TimeLog): Promise<Project> {
     return this.http.put(this.apiUrl + project._id, log)
       .toPromise()
-      .then(this.handleData)
+      .then( res => {const body = this.handleData(res);
+      this.timeAdded.next(log);
+    }
+    )
       .catch(this.handleError);
   }
 
   deleteLog(project: Project, log: TimeLog ): Promise<Project>  {
     return this.http.delete(this.apiUrl + project._id + '/edit/' + log.id)
       .toPromise()
-      .then(this.handleData)
+      .then(res => {
+        const body = this.handleData(res);
+        this.timeAdded.next(log);
+      })
       .catch(this.handleError);
   }
   getProject(id: string): Promise<Project> {

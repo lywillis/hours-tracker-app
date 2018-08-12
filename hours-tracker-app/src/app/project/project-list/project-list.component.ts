@@ -17,7 +17,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService) { }
 
   ngOnInit() {
-    // this.projectService.createProject(new Project('new'));
     this.getProjects();
   }
   ngOnDestroy() {

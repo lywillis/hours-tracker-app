@@ -26,6 +26,9 @@ export class TimerComponent implements OnInit {
   constructor(private timerService: TimerService, private projectService: ProjectService) { }
 
   ngOnInit() {
+    if (this.project) {
+      this.selectedProject = this.project;
+    }
     this.timerStatusSub = this.timerService.timerStatus$.subscribe((status: TimerStatus) => {
       if (status === TimerStatus.Play) {
         this.startTimer();
@@ -53,8 +56,7 @@ export class TimerComponent implements OnInit {
   saveTime() {
     // add log to current project
     const log = new TimeLog(this.start, this.end);
-    this.projectService.addLog(this.project, log);
-    console.log(log);
+    this.projectService.addLog(this.selectedProject, log);
     // clear timer
     this.ticks = 0;
   }
