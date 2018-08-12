@@ -22,6 +22,7 @@
   <div class="panel-body">{{ticks | duration}}</div>
   <div class="panel-footer">
     <button class="btn btn-sm"
-            (click)="saveTime()">SAVE</button>
+            (click)="saveTime()"
+            [disabled]='play || ticks==0'>SAVE</button>
   </div>
 </div>

@@ -22,6 +22,7 @@ export class TimerComponent implements OnInit {
   // time display
   ticks = 0; // in seconds
   @Input() project?: Project;
+  selectedProject?: Project;
   constructor(private timerService: TimerService, private projectService: ProjectService) { }
 
   ngOnInit() {
@@ -53,6 +54,7 @@ export class TimerComponent implements OnInit {
     // add log to current project
     const log = new TimeLog(this.start, this.end);
     this.projectService.addLog(this.project, log);
+    console.log(log);
     // clear timer
     this.ticks = 0;
   }
@@ -61,6 +63,6 @@ export class TimerComponent implements OnInit {
     this.timerService.toggleStatus();
   }
   setProject(event: Project) {
-    this.project = event;
+    this.selectedProject = event;
   }
 }
