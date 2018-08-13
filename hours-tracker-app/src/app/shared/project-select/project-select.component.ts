@@ -9,6 +9,7 @@ import { Project } from 'src/app/models/Project';
 })
 export class ProjectSelectComponent implements OnInit {
   projects: Array<Project> = [];
+  selectedProject: Project;
   @Output() project$: EventEmitter<Project> = new EventEmitter();
   constructor(private projectService: ProjectService) { }
 
@@ -17,6 +18,8 @@ export class ProjectSelectComponent implements OnInit {
   }
 
   selectProject(project: Project) {
+    console.log(project);
     this.project$.emit(project);
+    this.selectedProject = project;
   }
 }

@@ -5,7 +5,10 @@
   </button>
   <ul class="dropdown-menu" aria-labelledby="projectDropdown">
     <li *ngFor="let project of projects">
-      <button (click)="selectProject(project)">{{project.name}}</button>
+      <a (click)="selectProject(project)">{{project.name}}</a>
     </li>
   </ul>
+</div>
+<div>
+  <h5 *ngIf="selectedProject">{{selectedProject.name}}</h5>
 </div>

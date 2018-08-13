@@ -23,6 +23,6 @@
   <div class="panel-footer">
     <button class="btn btn-sm"
             (click)="saveTime()"
-            [disabled]='play || ticks==0'>SAVE</button>
+            [disabled]='play || ticks==0 || !selectedProject'>SAVE</button>
   </div>
 </div>
