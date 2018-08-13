@@ -13,6 +13,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProjectListComponent } from './project/project-list/project-list.component';
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
 import { ProjectSelectComponent } from './shared/project-select/project-select.component';
+import { ProjectAddComponent } from './project/project-add/project-add.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ProjectSelectComponent } from './shared/project-select/project-select.c
     DashboardComponent,
     ProjectListComponent,
     ProjectDetailComponent,
-    ProjectSelectComponent
+    ProjectSelectComponent,
+    ProjectAddComponent
   ],
   imports: [
     BrowserModule,
