@@ -8,13 +8,13 @@ import { Project } from 'src/app/models/Project';
   styleUrls: ['./project-add.component.less']
 })
 export class ProjectAddComponent implements OnInit {
-
   constructor(private projectService: ProjectService) { }
 
   ngOnInit() {
   }
 
-  addProject(project: Project) {
+  addProject(value: any) {
+    const project = new Project(value.name);
     this.projectService.createProject(project);
   }
 }

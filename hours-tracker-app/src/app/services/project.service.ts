@@ -11,7 +11,8 @@ import { Subject } from 'rxjs/internal/Subject';
 })
 export class ProjectService {
   apiUrl = 'http://localhost:3001/api/project/';
-  timeAdded: Subject<TimeLog> = new Subject<TimeLog>();
+  timeEdited: Subject<TimeLog> = new Subject<TimeLog>();
+  projectedEdited: Subject<Project> = new Subject<Project>();
   constructor(private http: Http) { }
 
   getProjects(n = 100): Observable<Project[]> {
@@ -26,7 +27,7 @@ export class ProjectService {
       .toPromise()
       .then(res => {
         const body = this.handleData(res);
-        return body;
+        this.projectedEdited.next(project);
       })
       .catch(this.handleError);
   }
@@ -35,7 +36,7 @@ export class ProjectService {
     return this.http.put(this.apiUrl + project._id, log)
       .toPromise()
       .then( res => {const body = this.handleData(res);
-      this.timeAdded.next(log);
+      this.timeEdited.next(log);
     }
     )
       .catch(this.handleError);
@@ -46,7 +47,7 @@ export class ProjectService {
       .toPromise()
       .then(res => {
         const body = this.handleData(res);
-        this.timeAdded.next(log);
+        this.timeEdited.next(log);
       })
       .catch(this.handleError);
   }

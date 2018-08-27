@@ -1,5 +1,38 @@
-<div class="input-group">
-  <input type="text"
-         class="form-control"
-         placeholder="Name">
+<button type="button"
+        class="btn btn-primary btn-lg"
+        data-toggle="modal"
+        data-target="#add-project-modal">
+  Add
+</button>
+
+<div class="modal fade"
+     id="add-project-modal"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title"
+          id="myModalLabel">New Project</h4>
+    </div>
+    <div class="modal-body">
+      <form #f="ngForm" (ngSubmit)="addProject(f.value)">
+      <div class="input-group">
+        <input type="text"
+               class="form-control"
+               name="name"
+               placeholder="Name"
+               ngModel>
+      </div>
+      <button type="submit"
+      class="btn btn-primary btn-sm">Create</button>
+    </form>
+    </div>
+  </div>
 </div>
