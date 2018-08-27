@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
-
+import {FormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { TimeLogService } from 'src/app/services/timelog.service';
 import { LogListComponent } from './log/log-list/log-list.component';
@@ -30,7 +30,8 @@ import { ProjectAddComponent } from './project/project-add/project-add.component
   imports: [
     BrowserModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [TimeLogService, TimerService],
   bootstrap: [AppComponent]

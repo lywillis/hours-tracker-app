@@ -18,7 +18,7 @@ export class LogListComponent implements OnInit, OnDestroy {
   constructor(private projectService: ProjectService) { }
   ngOnInit() {
     this.getTimeLogs();
-    this.projectService.timeAdded.subscribe(() => this.getTimeLogs());
+    this.projectService.timeEdited.subscribe(() => this.getTimeLogs());
   }
 
   ngOnDestroy() {
