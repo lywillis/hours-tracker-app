@@ -4,6 +4,12 @@
       <h5 class="text-capitalize">{{project.name}}</h5>
     </a>
     <small>{{project.createdAt | date:'mediumDate'}}</small>
+    <button type="button"
+            class="btn btn-sm"
+            (click)="deleteProject(project)">
+      <span class="glyphicon glyphicon-trash"
+            aria-hidden="true"></span>
+    </button>
   </div>
 </div>
 <div>

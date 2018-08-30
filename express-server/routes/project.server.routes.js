@@ -13,7 +13,8 @@ router.route('/project/find')
 
 router.route('/project/:id')
     .get(projectController.getProject)
-    .put(projectController.addTime);
+    .put(projectController.addTime)
+    .delete(projectController.deleteProject)
 
 router.route('/project/:id/edit/:log')
     .delete(projectController.deleteTimeLog);

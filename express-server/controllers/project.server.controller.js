@@ -60,4 +60,12 @@ export const deleteTimeLog = (req, res) => {
     });
   });
 }
+export const deleteProject = (req, res) => {
+  Project.findByIdAndRemove(req.params.id, (err, project) => {
+    if (err) {
+        return res.json({ 'success': false, 'message': 'Could not delete project' });
+    }
+    return res.json({ 'success': true, 'message': 'Project deleted successfully', project});
+})
+}
   
