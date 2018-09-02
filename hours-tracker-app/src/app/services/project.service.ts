@@ -22,14 +22,25 @@ export class ProjectService {
       return body.projects;
     }), catchError(this.handleError));
   }
+
   createProject(project: Project): Promise<Project> {
     return this.http.post(this.apiUrl + 'add/', project)
       .toPromise()
       .then(res => {
-        const body = this.handleData(res);
         this.projectedEdited.next(project);
+        const body = this.handleData(res);
+        return body;
       })
       .catch(this.handleError);
+  }
+  checkIfProjectExists(name: string): Promise<boolean> {
+    return this.http.get(this.apiUrl + 'add/' + name)
+    .toPromise()
+    .then(res => {
+      const body = this.handleData(res);
+    return body.projectExists;
+    }
+  );
   }
 
   addLog(project: Project, log: TimeLog): Promise<Project> {

@@ -5,8 +5,9 @@ import * as projectController from '../controllers/project.server.controller';
 // get an instance of express router
 const router = express.Router();
 
-router.route('/project/add')
-    .post(projectController.addProject);
+router.route('/project/add/:name?')
+    .post(projectController.addProject)
+    .get(projectController.checkIfProjectExists);
 
 router.route('/project/find')
     .post(projectController.getProjects);

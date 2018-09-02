@@ -16,13 +16,24 @@ export const getProjects = (req,res) => {
     });
   }
 
-  export const addProject = (req,res) => {
-    const newProj = new Project(req.body);
-    newProj.save((err,project) => {
-      if(err){
-      return res.json({'success':false,'message':'Could not add project'});
+export const addProject = (req, res) => {
+  const newProj = new Project(req.body);
+  newProj.save((err, project) => {
+    if (err) {
+      return res.json({ 'success': false, 'message': 'Could not add project' });
+    }
+    return res.json({ 'success': true, 'message': 'Project added successfully', project });
+  })
+}
+export const checkIfProjectExists = (req, res) => {
+  Project.findOne({ name: req.params.name })
+    .then(project => {
+      if (project) {
+        return res.json({ projectExists: true });
       }
-  return res.json({'success':true,'message':'Project added successfully',project});
+      else {
+        return res.json({ projectExists: false });
+      }
     })
   }
 
