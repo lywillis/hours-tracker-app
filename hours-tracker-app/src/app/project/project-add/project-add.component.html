@@ -22,17 +22,13 @@
           id="myModalLabel">New Project</h4>
     </div>
     <div class="modal-body">
-      <form #f="ngForm" (ngSubmit)="addProject(f.value)">
-      <div class="input-group">
-        <input type="text"
-               class="form-control"
-               name="name"
-               placeholder="Name"
-               ngModel>
-      </div>
-      <button type="submit"
-      class="btn btn-primary btn-sm">Create</button>
-    </form>
+      <form [formGroup]="projectForm" (ngSubmit)="addProject()" novalidate>
+        <input type="text" formControlName="name" class="form-control">
+        <div *ngIf="name.invalid">
+          <div *ngIf="name.errors['projectExists']" class="has-error">Project exists</div>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
     </div>
   </div>
 </div>
