@@ -35,12 +35,12 @@ export class ProjectService {
   }
   checkIfProjectExists(name: string): Promise<boolean> {
     return this.http.get(this.apiUrl + 'add/' + name)
-    .toPromise()
-    .then(res => {
-      const body = this.handleData(res);
-    return body.projectExists;
-    }
-  );
+      .toPromise()
+      .then(res => {
+        const body = res.json();
+        return body.projectExists;
+      }
+      );
   }
 
   addLog(project: Project, log: TimeLog): Promise<Project> {

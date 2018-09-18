@@ -1,5 +1,5 @@
 <button type="button"
-        class="btn btn-primary btn-lg"
+        class="btn btn-primary btn-sm"
         data-toggle="modal"
         data-target="#add-project-modal">
   Add
@@ -22,12 +22,18 @@
           id="myModalLabel">New Project</h4>
     </div>
     <div class="modal-body">
-      <form [formGroup]="projectForm" (ngSubmit)="addProject()" novalidate>
-        <input type="text" formControlName="name" class="form-control">
+      <form [formGroup]="projectForm"
+            (ngSubmit)="addProject()"
+            novalidate>
+        <input type="text"
+               formControlName="name"
+               class="form-control">
         <div *ngIf="name.invalid">
-          <div *ngIf="name.errors['projectExists']" class="has-error">Project exists</div>
+          <div *ngIf="name.errors['projectExists']"
+               class="has-error">Project exists</div>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn btn-sm"
+                [disabled]="projectForm.invalid">Submit</button>
       </form>
     </div>
   </div>

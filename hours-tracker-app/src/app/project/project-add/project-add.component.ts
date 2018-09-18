@@ -25,5 +25,8 @@ export class ProjectAddComponent implements OnInit {
   ngOnInit() {}
 
   addProject() {
+    const name = this.projectForm.value.name;
+    this.projectService.createProject(new Project(name));
+    this.projectForm.reset();
   }
 }
