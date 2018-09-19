@@ -14,6 +14,7 @@ import { ProjectListComponent } from './project/project-list/project-list.compon
 import { ProjectDetailComponent } from './project/project-detail/project-detail.component';
 import { ProjectSelectComponent } from './shared/project-select/project-select.component';
 import { ProjectAddComponent } from './project/project-add/project-add.component';
+import { ChartComponent } from './data/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ProjectAddComponent } from './project/project-add/project-add.component
     ProjectListComponent,
     ProjectDetailComponent,
     ProjectSelectComponent,
-    ProjectAddComponent
+    ProjectAddComponent,
+    ChartComponent
   ],
   imports: [
     BrowserModule,
