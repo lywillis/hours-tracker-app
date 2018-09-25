@@ -6,4 +6,11 @@ import { Injectable } from '@angular/core';
 export class ChartService {
 
   constructor() { }
+
+  groupTimeData() { }
+
+  groupByMonth() { }
+
+  groupByDay() { }
+
 }
