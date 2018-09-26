@@ -18,6 +18,7 @@ export class ChartComponent implements OnInit {
   private width: number;
   private x: any; // x axis scale
   private y: any; // y axis scale
+  svg: any;
   chart: any;
 
   constructor() { }
@@ -32,19 +33,18 @@ export class ChartComponent implements OnInit {
     this.width = element.offsetWidth - this.margin.left - this.margin.right;
     this.height = element.offsetHeight - this.margin.top - this.margin.bottom;
 
-    const svg = d3.select(element)
+    this.svg = d3.select(element)
     .append('svg')
     .attr('width', element.offsetWidth)
     .attr('height', element.offsetHeight);
 
-    this.chart = svg.append('g')
+    this.chart = this.svg.append('g')
     .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
 
     this.initAxis();
   }
 
   private initAxis() {
-
     this.x = d3.scaleBand().rangeRound([0, this.width]);
     this.y = d3.scaleLinear().rangeRound([this.height, 0]);
   }
