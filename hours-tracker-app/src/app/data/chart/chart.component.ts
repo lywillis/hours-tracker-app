@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ElementRef, ViewChild, ViewEncapsulation} fro
 import { Project } from 'src/app/models/Project';
 import { ProjectService } from 'src/app/services/project.service';
 import * as d3 from 'd3';
+import { Datum } from '../../services/chart.service';
 
 @Component({
   selector: 'app-chart',
@@ -9,7 +10,7 @@ import * as d3 from 'd3';
   styleUrls: ['./chart.component.less']
 })
 export class ChartComponent implements OnInit {
-  @Input() project: Project;
+  @Input() data: Array<Datum>;
   @ViewChild('chart') private chartContainer: ElementRef;
 
   private margin = {top: 20, right: 20, bottom: 30, left: 40};
@@ -18,6 +19,8 @@ export class ChartComponent implements OnInit {
   private width: number;
   private x: any; // x axis scale
   private y: any; // y axis scale
+  private xAxis: any;
+  private yAxis: any;
   svg: any;
   chart: any;
 
@@ -25,6 +28,9 @@ export class ChartComponent implements OnInit {
 
   ngOnInit() {
     this.initChart();
+    if (this.data) {
+      this.updateChart();
+    }
   }
 
   private initChart() {
@@ -46,6 +52,22 @@ export class ChartComponent implements OnInit {
 
   private initAxis() {
     this.x = d3.scaleBand().rangeRound([0, this.width]);
+    this.xAxis = this.svg.append('g')
+    .attr('class', 'axis axis-x')
+    .attr('transform', `translate(${this.margin.left}, ${this.margin.top + this.height})`)
+    .call(d3.axisBottom(this.x));
     this.y = d3.scaleLinear().rangeRound([this.height, 0]);
+
+  }
+
+  private updateChart() {
+    this.updateAxis();
+  }
+  private updateAxis() {
+    const xDomain = this.data.map(d => d.key);
+    this.x = this.x.domain(xDomain);
+    this.xAxis.call(this.x);
+
+
   }
 }

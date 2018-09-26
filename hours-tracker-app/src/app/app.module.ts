@@ -16,6 +16,7 @@ import { ProjectSelectComponent } from './shared/project-select/project-select.c
 import { ProjectAddComponent } from './project/project-add/project-add.component';
 import { ChartComponent } from './data/chart/chart.component';
 import { LogDataComponent } from './data/log-data/log-data.component';
+import { ChartService } from './services/chart.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { LogDataComponent } from './data/log-data/log-data.component';
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [TimeLogService, TimerService],
+  providers: [TimeLogService, TimerService, ChartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

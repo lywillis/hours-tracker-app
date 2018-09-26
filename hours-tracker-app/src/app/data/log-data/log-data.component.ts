@@ -1,6 +1,9 @@
 import { Component, OnInit, Input} from '@angular/core';
 import { Project } from '../../models/Project';
-import { ChartService } from '../../services/chart.service';
+import { ChartService, Datum } from '../../services/chart.service';
+import { TimeLog } from '../../models/TimeLog';
+import { Subscription } from 'rxjs';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-log-data',
@@ -9,9 +12,17 @@ import { ChartService } from '../../services/chart.service';
 })
 export class LogDataComponent implements OnInit {
   @Input() project: Project;
-  constructor(private chartService: ChartService) { }
+  timeLogSub: Subscription;
+  datum: Array<Datum> = [];
+  constructor(private chartService: ChartService, private projectService: ProjectService) { }
 
   ngOnInit() {
+    this.getTimeLogs();
+  }
+  getTimeLogs() {
+    this.timeLogSub = this.projectService.getTimeLogs(this.project).subscribe(logs => {
+     this.datum = this.chartService.groupTimeData(logs);
+    });
   }
 
 }
