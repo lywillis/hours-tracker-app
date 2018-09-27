@@ -45,19 +45,25 @@ export class ChartComponent implements OnInit {
     .attr('height', element.offsetHeight);
 
     this.chart = this.svg.append('g')
+    .attr('class', 'bars')
     .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
 
     this.initAxis();
   }
 
   private initAxis() {
+    // init x axis
     this.x = d3.scaleBand().rangeRound([0, this.width]);
     this.xAxis = this.svg.append('g')
     .attr('class', 'axis axis-x')
     .attr('transform', `translate(${this.margin.left}, ${this.margin.top + this.height})`)
     .call(d3.axisBottom(this.x));
+    // init y axis
     this.y = d3.scaleLinear().rangeRound([this.height, 0]);
-
+    this.yAxis = this.svg.append('g')
+    .attr('class', 'axis axis-y')
+    .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+    this.updateAxis();
   }
 
   private updateChart() {
@@ -66,8 +72,10 @@ export class ChartComponent implements OnInit {
   private updateAxis() {
     const xDomain = this.data.map(d => d.key);
     this.x = this.x.domain(xDomain);
-    this.xAxis.call(this.x);
+    this.xAxis.call(d3.axisBottom(this.x));
 
-
+    const yDomain = [0, d3.max(this.data, d => d.value)];
+    this.y = this.y.domain(yDomain);
+    this.yAxis.call(d3.axisLeft(this.y));
   }
 }
