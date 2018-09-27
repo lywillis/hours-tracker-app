@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, ViewChild, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild, ViewEncapsulation, OnChanges} from '@angular/core';
 import { Project } from 'src/app/models/Project';
 import { ProjectService } from 'src/app/services/project.service';
 import * as d3 from 'd3';
@@ -7,13 +7,14 @@ import { Datum } from '../../services/chart.service';
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
-  styleUrls: ['./chart.component.less']
+  styleUrls: ['./chart.component.less'],
+  encapsulation: ViewEncapsulation.None
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnChanges {
   @Input() data: Array<Datum>;
   @ViewChild('chart') private chartContainer: ElementRef;
 
-  private margin = {top: 20, right: 20, bottom: 30, left: 40};
+  private margin = {top: 20, right: 30, bottom: 20, left: 10};
 
   private height: number;
   private width: number;
@@ -29,6 +30,11 @@ export class ChartComponent implements OnInit {
   ngOnInit() {
     this.initChart();
     if (this.data) {
+      this.updateChart();
+    }
+  }
+  ngOnChanges() {
+    if (this.chart) {
       this.updateChart();
     }
   }
@@ -56,26 +62,39 @@ export class ChartComponent implements OnInit {
     this.x = d3.scaleBand().rangeRound([0, this.width]);
     this.xAxis = this.svg.append('g')
     .attr('class', 'axis axis-x')
-    .attr('transform', `translate(${this.margin.left}, ${this.margin.top + this.height})`)
-    .call(d3.axisBottom(this.x));
+    .attr('transform', `translate(${this.margin.left}, ${this.margin.top + this.height})`);
     // init y axis
-    this.y = d3.scaleLinear().rangeRound([this.height, 0]);
+    this.y = d3.scaleLinear().range([this.height, 0]);
     this.yAxis = this.svg.append('g')
     .attr('class', 'axis axis-y')
-    .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
-    this.updateAxis();
+    .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
+    .call(d3.axisLeft(this.y));
   }
 
   private updateChart() {
     this.updateAxis();
+    this.updateData();
   }
   private updateAxis() {
     const xDomain = this.data.map(d => d.key);
-    this.x = this.x.domain(xDomain);
+    this.x.domain(xDomain);
     this.xAxis.call(d3.axisBottom(this.x));
 
     const yDomain = [0, d3.max(this.data, d => d.value)];
-    this.y = this.y.domain(yDomain);
+    this.y.domain(yDomain);
     this.yAxis.call(d3.axisLeft(this.y));
+  }
+
+  private updateData() {
+    const bars = this.chart.selectAll('.bar').data(this.data);
+    bars.exit().remove();
+    bars.enter()
+    .append('rect')
+    .attr('class', 'bar')
+    .attr('x', d => this.x(d.key))
+    .attr('y', d => this.y(d.value))
+    .attr('width', this.x.bandwidth())
+    .attr('height', d => this.height - this.y(d.value));
+
   }
 }

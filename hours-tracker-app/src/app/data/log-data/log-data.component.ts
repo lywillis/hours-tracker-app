@@ -4,6 +4,7 @@ import { ChartService, Datum } from '../../services/chart.service';
 import { TimeLog } from '../../models/TimeLog';
 import { Subscription } from 'rxjs';
 import { ProjectService } from '../../services/project.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-log-data',
@@ -11,13 +12,17 @@ import { ProjectService } from '../../services/project.service';
   styleUrls: ['./log-data.component.less']
 })
 export class LogDataComponent implements OnInit {
-  @Input() project: Project;
+  project: Project;
   timeLogSub: Subscription;
-  datum: Array<Datum> = [];
-  constructor(private chartService: ChartService, private projectService: ProjectService) { }
+  datum: Array<Datum>;
+  constructor(private chartService: ChartService, private projectService: ProjectService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.getTimeLogs();
+    const id = this.route.snapshot.paramMap.get('id');
+    this.projectService.getProject(id).then(project => {
+      this.project = project;
+      this.getTimeLogs();
+    });
   }
   getTimeLogs() {
     this.timeLogSub = this.projectService.getTimeLogs(this.project).subscribe(logs => {

@@ -6,12 +6,14 @@ import { LogListComponent } from 'src/app/log/log-list/log-list.component';
 import { DashboardComponent } from 'src/app/dashboard/dashboard.component';
 import { ProjectListComponent } from 'src/app/project/project-list/project-list.component';
 import { ProjectDetailComponent } from 'src/app/project/project-detail/project-detail.component';
+import { LogDataComponent } from './data/log-data/log-data.component';
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'timer', component: TimerComponent },
   { path: 'projects', component: ProjectListComponent},
-  { path: 'project/:id', component: ProjectDetailComponent}
+  { path: 'project/:id', component: ProjectDetailComponent},
+  { path: 'project/:id/data', component: LogDataComponent}
 ];
 
 @NgModule({

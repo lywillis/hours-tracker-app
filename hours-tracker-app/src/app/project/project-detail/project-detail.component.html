@@ -2,5 +2,6 @@
     <h5>{{project.name}}</h5>
     <app-timer [project]="project"></app-timer>
     <app-log-list [project]="project"></app-log-list>
-    <app-log-data [project]="project"></app-log-data>
+    <a [routerLink]="['/project', project._id, 'data']">
+        <h5 class="text-capitalize">Data</h5></a>
 </div>
