@@ -57,8 +57,16 @@ export class ProjectService {
     return this.http.get(this.apiUrl + id)
       .toPromise()
       .then(res => {
-        const body = this.handleData(res);
-        return body.project;
+        const project = this.handleData(res).project;
+        const logs = project.logs.map(log => {
+          const start = new Date(log.start);
+          const end = new Date(log.end);
+          const timeLog: TimeLog = new TimeLog(start, end);
+          timeLog.id = log._id;
+          return timeLog;
+        });
+        project.logs = logs;
+        return project;
       }
       )
       .catch(this.handleError);

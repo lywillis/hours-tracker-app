@@ -14,7 +14,7 @@ export class ChartComponent implements OnInit, OnChanges {
   @Input() data: Array<Datum>;
   @ViewChild('chart') private chartContainer: ElementRef;
 
-  private margin = {top: 20, right: 30, bottom: 20, left: 10};
+  private margin = {top: 20, right: 30, bottom: 20, left: 20};
 
   private height: number;
   private width: number;

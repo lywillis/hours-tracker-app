@@ -13,21 +13,24 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LogDataComponent implements OnInit {
   project: Project;
-  timeLogSub: Subscription;
   datum: Array<Datum>;
-  constructor(private chartService: ChartService, private projectService: ProjectService, private route: ActivatedRoute) { }
+  interval = 'Month';
+  constructor(private chartService: ChartService,
+    private projectService: ProjectService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     this.projectService.getProject(id).then(project => {
+      this.chartService.setProject(project);
       this.project = project;
-      this.getTimeLogs();
+      this.datum = this.chartService.getData(this.interval);
     });
   }
-  getTimeLogs() {
-    this.timeLogSub = this.projectService.getTimeLogs(this.project).subscribe(logs => {
-     this.datum = this.chartService.groupTimeData(logs);
-    });
+
+  setTimeInterval(interval: string) {
+    this.interval = interval;
+    this.datum = this.chartService.getData(this.interval);
   }
 
 }
