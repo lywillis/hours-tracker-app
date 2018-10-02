@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import { TimeLog } from '../models/TimeLog';
 
 export interface Datum {
-    key: string;
+    key: string | Date;
     value: number;
 }
 
