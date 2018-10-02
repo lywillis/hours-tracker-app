@@ -42,6 +42,7 @@ export class ChartService {
     const months = d3.timeMonths(d3.timeYear(this.now), d3.timeYear.ceil(this.now));
     const data = this.groupData(logs, format);
     return data;
+    return this.groupData(logs, format);
   }
 
   private groupByDay(logs: Array<TimeLog>): Array<Datum> {
