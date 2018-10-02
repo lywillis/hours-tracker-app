@@ -22,6 +22,7 @@ export class ChartComponent implements OnInit, OnChanges {
   private y: any; // y axis scale
   private xAxis: any;
   private yAxis: any;
+  private colors: any;
   svg: any;
   chart: any;
 
@@ -59,7 +60,7 @@ export class ChartComponent implements OnInit, OnChanges {
 
   private initAxis() {
     // init x axis
-    this.x = d3.scaleBand().rangeRound([0, this.width]);
+    this.x = d3.scaleBand().padding(0.15).rangeRound([0, this.width]);
     this.xAxis = this.svg.append('g')
     .attr('class', 'axis axis-x')
     .attr('transform', `translate(${this.margin.left}, ${this.margin.top + this.height})`);
@@ -77,24 +78,35 @@ export class ChartComponent implements OnInit, OnChanges {
   }
   private updateAxis() {
     const xDomain = this.data.map(d => d.key);
-    this.x.domain(xDomain);
+    this.x = this.x.domain(xDomain);
     this.xAxis.call(d3.axisBottom(this.x));
-
     const yDomain = [0, d3.max(this.data, d => d.value)];
-    this.y.domain(yDomain);
+    this.y = this.y.domain(yDomain);
     this.yAxis.call(d3.axisLeft(this.y));
   }
 
   private updateData() {
+    this.colors = d3.scaleLinear().domain([0, this.data.length]).range(<any[]>['lightblue', 'blue']);
     const bars = this.chart.selectAll('.bar').data(this.data);
     bars.exit().remove();
+
+    // update existing bars
+    this.chart.selectAll('.bar')
+    .attr('class', 'bar')
+    .attr('x', d => this.x(d.key))
+    .attr('y', d => this.y(d.value))
+    .attr('width', this.x.bandwidth())
+    .attr('height', d => this.height - this.y(d.value))
+    .style('fill', (d, i) => this.colors(i));
+
+    // add new bars
     bars.enter()
     .append('rect')
     .attr('class', 'bar')
     .attr('x', d => this.x(d.key))
     .attr('y', d => this.y(d.value))
     .attr('width', this.x.bandwidth())
-    .attr('height', d => this.height - this.y(d.value));
-
+    .attr('height', d => this.height - this.y(d.value))
+    .style('fill', (d, i) => this.colors(i));
   }
 }

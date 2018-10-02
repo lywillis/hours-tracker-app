@@ -15,12 +15,12 @@ export class ChartService {
   constructor() { }
   project: Project;
   private timeLogs: Array<TimeLog>;
-  private currTime: Date;
+  private now: Date;
 
   setProject(project: Project) {
     this.project = project;
     this.timeLogs = project.logs;
-    this.currTime = new Date();
+    this.now = new Date();
   }
 
   getData(timeInterval: string): Array<Datum> {
@@ -32,45 +32,78 @@ export class ChartService {
       case 'Day':
         return this.groupByHour(this.timeLogs);
     }
-    return this.groupByDay(this.timeLogs);
   }
 
   private groupByMonth(logs: Array<TimeLog>): Array<Datum> {
     const monthFormat = '%b %y';
-    const month = d3.timeFormat(monthFormat);
-    const monthParser = d3.timeParse(monthFormat);
     const displayFormat = d3.timeFormat('%b');
-    return this.groupData(logs, month).map(res => {
-      return { key: displayFormat(monthParser(res.key)), value: res.value};
+    const months = d3.timeMonths(d3.timeYear(this.now), d3.timeYear.ceil(this.now))
+    .map(month => {
+      return {key: displayFormat(month),
+      value: 0
+    };
     });
+    const data = this.groupData(logs, monthFormat);
+    data.forEach(d => {
+      const found = months.find(m => {
+        return m.key === displayFormat(d.key);
+      }
+      );
+      if (found) { found.value = d.value; }
+    });
+    return months;
   }
 
   private groupByDay(logs: Array<TimeLog>): Array<Datum> {
     const dayFormat = '%b %d %y';
-    const day = d3.timeFormat(dayFormat);
-    const dayParser = d3.timeParse(dayFormat);
-    const displayFormat = d3.timeFormat('%b %d');
-    return this.groupData(logs, day).map(res => {
-      return { key: displayFormat(dayParser(res.key)), value: res.value};
+    const displayFormat = d3.timeFormat('%d');
+    const days = d3.timeDays(d3.timeMonth(this.now), d3.timeMonth.ceil(this.now))
+    .map(day => {
+      return {
+        key: displayFormat(day),
+        value: 0
+      };
     });
+    const data = this.groupData(logs, dayFormat).filter(d => d.key >= d3.timeMonth(this.now) && d.key <= d3.timeMonth.ceil(this.now) );
+    data.forEach(d => {
+      const found = days.find(day => {
+        return day.key === displayFormat(d.key);
+      }
+      );
+      if (found) {found.value = d.value; }
+    });
+    return days;
    }
    private groupByHour(logs: Array<TimeLog>): Array<Datum> {
     const hourFormat = '%H %b %d %y';
-    const hour = d3.timeFormat(hourFormat);
-    const hourParser = d3.timeParse(hourFormat);
     const displayFormat = d3.timeFormat('%H:%M');
-    return this.groupData(logs, hour).map(res => {
-      return {key: displayFormat(hourParser(res.key)), value: res.value};
+    const hours = d3.timeHours(d3.timeDay(this.now), d3.timeDay.ceil(this.now))
+    .map(hour => {
+      return {
+        key: displayFormat(hour),
+        value: 0
+      };
     });
+    const data = this.groupData(logs, hourFormat).filter(d => d.key >= d3.timeDay(this.now) && d.key <= d3.timeDay.ceil(this.now) );
+    data.forEach(d => {
+      const found = hours.find(h => {
+        return h.key === displayFormat(d.key);
+      }
+      );
+      if (found) {found.value = d.value; }
+    });
+    return hours;
    }
 
-   private groupData(logs: Array<TimeLog>, formatter: any): Array<Datum> {
+   private groupData(logs: Array<TimeLog>, format: any): Array<any> {
+     const formatter = d3.timeFormat(format);
+     const parser = d3.timeParse(format);
     return d3.nest<TimeLog, number>().key(d => {
       return formatter(d.start);
     }).rollup(res => {
       return d3.sum(res, v => v.duration);
     }).entries(logs).map(res => {
-      return { key: res.key, value: res.value };
+      return { key: parser(res.key), value: res.value };
     });
    }
 }
