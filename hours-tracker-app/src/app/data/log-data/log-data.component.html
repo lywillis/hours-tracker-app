@@ -3,4 +3,5 @@
     <button class="btn btn-secondary" (click)="setTimeInterval('Month')">Month</button>
     <button class="btn btn-secondary" (click)="setTimeInterval('Day')">Day</button>
 </div>
-<app-chart [data]="datum"></app-chart>
+<div class="btn-group"></div>
+<app-chart [title]="chartLabels.title" [data]="datum"></app-chart>

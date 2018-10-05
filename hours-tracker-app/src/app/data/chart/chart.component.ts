@@ -12,9 +12,10 @@ import { Datum } from '../../services/chart.service';
 })
 export class ChartComponent implements OnInit, OnChanges {
   @Input() data: Array<Datum>;
+  @Input() title: string;
   @ViewChild('chart') private chartContainer: ElementRef;
 
-  private margin = {top: 20, right: 30, bottom: 20, left: 20};
+  private margin = {top: 20, right: 30, bottom: 20, left: 40};
 
   private height: number;
   private width: number;
@@ -55,6 +56,14 @@ export class ChartComponent implements OnInit, OnChanges {
     .attr('class', 'bars')
     .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
 
+    // init chart title
+    this.svg.append('text')
+      .attr('class', 'title')
+      .attr('x', this.width / 2 + this.margin.left)
+      .attr('y', 40)
+      .attr('text-anchor', 'middle')
+      .text(this.title);
+
     this.initAxis();
   }
 
@@ -64,15 +73,27 @@ export class ChartComponent implements OnInit, OnChanges {
     this.xAxis = this.svg.append('g')
     .attr('class', 'axis axis-x')
     .attr('transform', `translate(${this.margin.left}, ${this.margin.top + this.height})`);
+
     // init y axis
     this.y = d3.scaleLinear().range([this.height, 0]);
     this.yAxis = this.svg.append('g')
     .attr('class', 'axis axis-y')
     .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`)
     .call(d3.axisLeft(this.y));
+    // y axis label
+    this.svg.append('text')
+    .attr('class', 'label')
+    .attr('x', -(this.height / 2) - this.margin.top)
+    .attr('y', this.margin.left / 4)
+    .attr('transform', 'rotate(-90)')
+    .attr('text-anchor', 'middle')
+    .text('Total Duration');
   }
 
   private updateChart() {
+    this.svg.select('.title')
+    .text(this.title);
+
     this.updateAxis();
     this.updateData();
   }
@@ -87,17 +108,31 @@ export class ChartComponent implements OnInit, OnChanges {
 
   private updateData() {
     this.colors = d3.scaleLinear().domain([0, this.data.length]).range(<any[]>['lightblue', 'blue']);
+    const textPadding = 5;
+
     const bars = this.chart.selectAll('.bar').data(this.data);
+    const vals = this.chart.selectAll('.val').data(this.data);
+
     bars.exit().remove();
+    vals.exit().remove();
 
     // update existing bars
-    this.chart.selectAll('.bar')
-    .attr('class', 'bar')
+    bars.attr('class', 'bar')
     .attr('x', d => this.x(d.key))
     .attr('y', d => this.y(d.value))
     .attr('width', this.x.bandwidth())
     .attr('height', d => this.height - this.y(d.value))
     .style('fill', (d, i) => this.colors(i));
+
+    vals.attr('class', 'val')
+    .attr('x', d => this.x(d.key) + this.x.bandwidth() / 2)
+    .attr('y', d => this.y(d.value) - textPadding)
+    .text(d => {
+      if (d.value !== 0) {
+        return d.value;
+      }
+     }
+     );
 
     // add new bars
     bars.enter()
@@ -108,5 +143,18 @@ export class ChartComponent implements OnInit, OnChanges {
     .attr('width', this.x.bandwidth())
     .attr('height', d => this.height - this.y(d.value))
     .style('fill', (d, i) => this.colors(i));
+
+    vals.enter()
+    .append('text')
+    .attr('class', 'val')
+    .attr('text-anchor', 'middle')
+    .attr('x', d => this.x(d.key) + this.x.bandwidth() / 2)
+    .attr('y', d => this.y(d.value) - textPadding)
+    .text(d => {
+      if (d.value !== 0) {
+        return d.value;
+      }
+     }
+     );
   }
 }

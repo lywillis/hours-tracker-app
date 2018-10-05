@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 export class LogDataComponent implements OnInit {
   project: Project;
   datum: Array<Datum>;
+  chartLabels: any = {};
   interval = 'Month';
   constructor(private chartService: ChartService,
     private projectService: ProjectService,
@@ -25,12 +26,14 @@ export class LogDataComponent implements OnInit {
       this.chartService.setProject(project);
       this.project = project;
       this.datum = this.chartService.getData(this.interval);
+      this.chartLabels = this.chartService.getChartLabels();
     });
   }
 
   setTimeInterval(interval: string) {
     this.interval = interval;
     this.datum = this.chartService.getData(this.interval);
+    this.chartLabels = this.chartService.getChartLabels();
   }
 
 }

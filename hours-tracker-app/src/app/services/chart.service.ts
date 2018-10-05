@@ -14,6 +14,7 @@ export class ChartService {
 
   constructor() { }
   project: Project;
+  private title: string;
   private timeLogs: Array<TimeLog>;
   private now: Date;
 
@@ -23,13 +24,26 @@ export class ChartService {
     this.now = new Date();
   }
 
+  getChartLabels() {
+    if (this.project) {
+      return {
+        title: this.title
+      };
+    }
+  }
   getData(timeInterval: string): Array<Datum> {
     switch (timeInterval) {
       case 'Year':
+        const yearFormat = d3.timeFormat('%Y');
+        this.title = yearFormat(this.now);
         return this.groupByMonth(this.timeLogs);
       case 'Month':
+        const monthFormat = d3.timeFormat('%b %Y');
+        this.title = monthFormat(this.now);
         return this.groupByDay(this.timeLogs);
       case 'Day':
+        const dayFormat = d3.timeFormat('%b %d');
+        this.title = dayFormat(this.now);
         return this.groupByHour(this.timeLogs);
     }
   }
