@@ -15,7 +15,7 @@ export class ChartComponent implements OnInit, OnChanges {
   @Input() title: string;
   @ViewChild('chart') private chartContainer: ElementRef;
 
-  private margin = {top: 20, right: 30, bottom: 20, left: 40};
+  private margin = {top: 20, right: 30, bottom: 30, left: 40};
 
   private height: number;
   private width: number;
@@ -56,14 +56,6 @@ export class ChartComponent implements OnInit, OnChanges {
     .attr('class', 'bars')
     .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
 
-    // init chart title
-    this.svg.append('text')
-      .attr('class', 'title')
-      .attr('x', this.width / 2 + this.margin.left)
-      .attr('y', 40)
-      .attr('text-anchor', 'middle')
-      .text(this.title);
-
     this.initAxis();
   }
 
@@ -71,8 +63,16 @@ export class ChartComponent implements OnInit, OnChanges {
     // init x axis
     this.x = d3.scaleBand().padding(0.15).rangeRound([0, this.width]);
     this.xAxis = this.svg.append('g')
-    .attr('class', 'axis axis-x')
-    .attr('transform', `translate(${this.margin.left}, ${this.margin.top + this.height})`);
+      .attr('class', 'axis axis-x')
+      .attr('transform', `translate(${this.margin.left}, ${this.margin.top + this.height})`);
+
+    // init chart title as x axis title
+    this.svg.append('text')
+      .attr('class', 'axis-x label')
+      .attr('x', this.width / 2 + this.margin.left)
+      .attr('y', this.height + this.margin.top + this.margin.bottom)
+      .attr('text-anchor', 'middle')
+      .text(this.title);
 
     // init y axis
     this.y = d3.scaleLinear().range([this.height, 0]);
@@ -82,7 +82,7 @@ export class ChartComponent implements OnInit, OnChanges {
     .call(d3.axisLeft(this.y));
     // y axis label
     this.svg.append('text')
-    .attr('class', 'label')
+    .attr('class', 'axis-y label')
     .attr('x', -(this.height / 2) - this.margin.top)
     .attr('y', this.margin.left / 4)
     .attr('transform', 'rotate(-90)')
@@ -91,7 +91,7 @@ export class ChartComponent implements OnInit, OnChanges {
   }
 
   private updateChart() {
-    this.svg.select('.title')
+    this.svg.select('.axis-x.label')
     .text(this.title);
 
     this.updateAxis();
