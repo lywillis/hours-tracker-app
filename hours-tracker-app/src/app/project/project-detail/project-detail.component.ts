@@ -18,6 +18,7 @@ export class ProjectDetailComponent implements OnInit {
   getProject() {
     const id = this.route.snapshot.paramMap.get('id');
     this.projectService.getProject(id).then(project => {
+      this.projectService.currProject = project;
       this.project = project;
     });
   }

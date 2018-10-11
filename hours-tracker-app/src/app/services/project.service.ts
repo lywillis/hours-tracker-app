@@ -10,10 +10,15 @@ import { Subject } from 'rxjs/internal/Subject';
   providedIn: 'root'
 })
 export class ProjectService {
-  apiUrl = 'http://localhost:3001/api/project/';
+  currProject: Project;
+  private apiUrl = 'http://localhost:3001/api/project/';
   timeEdited: Subject<TimeLog> = new Subject<TimeLog>();
   projectedEdited: Subject<Project> = new Subject<Project>();
   constructor(private http: Http) { }
+
+  setProject(project: Project) {
+    this.currProject = project;
+  }
 
   getProjects(n = 100): Observable<Project[]> {
     const req = { n: n };
@@ -87,6 +92,25 @@ export class ProjectService {
       .then(res => {
         const body = this.handleData(res);
         this.timeEdited.next(log);
+      })
+      .catch(this.handleError);
+  }
+  getLog(project: Project, log: TimeLog): Promise<TimeLog> {
+    return this.http.get(this.apiUrl + project._id + '/edit/' + log.id)
+      .toPromise()
+      .then(res => {
+        const body = this.handleData(res);
+        return body.log;
+      })
+      .catch(this.handleError);
+  }
+
+  updateTimeLog(project: Project, log: TimeLog) {
+    return this.http.put(this.apiUrl + project._id + '/edit/' + log.id, log)
+      .toPromise()
+      .then(res => {
+        const body = this.handleData(res);
+        return body.log;
       })
       .catch(this.handleError);
   }

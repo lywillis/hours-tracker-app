@@ -11,7 +11,7 @@
         <th id="duration" scope="col">
           <h4>Duration</h4>
         </th>
-        <th id="delete" scope="col"></th>
+        <th id="edit" scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -26,10 +26,11 @@
         <td headers="duration">
           <div>{{log.duration | duration }}</div>
         </td>
-        <td headers="delete">
+        <td headers="edit">
           <button type="button" class="btn btn-default" (click)="deleteTimeLog(log)">
             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
           </button>
+          <app-log-edit [log]="log"></app-log-edit>
         </td>
       </tr>
     </tbody>

@@ -17,6 +17,7 @@ import { ProjectAddComponent } from './project/project-add/project-add.component
 import { ChartComponent } from './data/chart/chart.component';
 import { LogDataComponent } from './data/log-data/log-data.component';
 import { ChartService } from './services/chart.service';
+import { LogEditComponent } from './log/log-edit/log-edit.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ChartService } from './services/chart.service';
     ProjectSelectComponent,
     ProjectAddComponent,
     ChartComponent,
-    LogDataComponent
+    LogDataComponent,
+    LogEditComponent
   ],
   imports: [
     BrowserModule,

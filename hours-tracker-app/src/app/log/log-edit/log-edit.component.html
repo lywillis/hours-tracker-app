@@ -1,0 +1,15 @@
+<form [formGroup]="logEditForm"
+      (ngSubmit)="updateTimeLog()"
+      novalidate>
+  <input type="date"
+         formControlName="start"
+         placeholder="log.start"
+         class="form-control">
+  <input type="date"
+         formControlName="end"
+         placeholder="log.end"
+         class="form-control">
+  <button type="submit"
+          class="btn btn-sm"
+          [disabled]="logEditForm.invalid">Submit</button>
+</form>

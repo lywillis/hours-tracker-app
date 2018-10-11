@@ -37,18 +37,6 @@ export const checkIfProjectExists = (req, res) => {
     })
   }
 
-export const addTime = (req, res) => {
-  const newLog = new TimeLog(req.body);
-  Project.findById(req.params.id).exec((err, project) => {
-    project.logs.push(newLog);
-    project.save((err, proj) => {
-      if (err) {
-        return res.json({ 'success': false, 'message': 'Could not add time to project' });
-      }
-      return res.json({ 'success': true, 'message': 'Time added successfully', proj });
-    });
-  });
-}
 export const getProject = (req,res) => {
   Project.findById(req.params.id)
   .exec((err,project) => {
@@ -59,18 +47,6 @@ return res.json({'success':true,'message':'Project found',project});
   });
 }
 
-export const deleteTimeLog = (req, res) => {
-  Project.findById(req.params.id)
-  .exec((err,project) => {
-    project.logs.id(req.params.log).remove();
-    project.save((err, proj) => {
-      if (err) {
-        return res.json({ 'success': false, 'message': 'Could not delete time from project' });
-      }
-      return res.json({ 'success': true, 'message': 'Time log deleted successfully', proj });
-    });
-  });
-}
 export const deleteProject = (req, res) => {
   Project.findByIdAndRemove(req.params.id, (err, project) => {
     if (err) {
