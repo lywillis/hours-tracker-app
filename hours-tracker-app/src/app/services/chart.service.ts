@@ -63,8 +63,8 @@ export class ChartService {
     for (const d of data) {
       const idx = months.findIndex(m => m.key === displayFormat(d.key));
       months[idx].value += d.value;
-      return months;
     }
+    return months;
   }
 
   private groupByDay(logs: Array<TimeLog>): Array<Datum> {
